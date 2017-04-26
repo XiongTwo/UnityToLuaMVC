@@ -1,0 +1,26 @@
+﻿using UnityEngine;
+using System.Collections;
+using StaticModules;
+using UnityEngine.SceneManagement;
+
+public class MonoBehaviourTest : MonoBehaviour {
+
+	// Use this for initialization
+	void Awake () {
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Login", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        
+       // Common.DelayExecuteLuaFun(5,null);Time.deltaTime
+    }
+    
+    void Start()
+    {
+       
+
+    }
+   
+	// Update is called once per frame
+	void Update () {
+        
+    }
+}

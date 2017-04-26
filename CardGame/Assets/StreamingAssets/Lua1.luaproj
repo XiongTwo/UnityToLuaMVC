@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>E439935D-B2A2-46AE-856D-2AA408428F33</ProjectGuid>
+    <!--$guid1$-->
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>
+    </StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Lua\" />
+    <Folder Include="Lua\Controller\" />
+    <Folder Include="Lua\Manage\" />
+    <Folder Include="Lua\View\" />
+    <Folder Include="Lua\Other\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Lua\Const.lua" />
+    <Compile Include="Lua\Controller\GlobalEventController.lua" />
+    <Compile Include="Lua\Controller\UpdateController.lua" />
+    <Compile Include="Lua\GlobalVar.lua" />
+    <Compile Include="Lua\Main.lua" />
+    <Compile Include="Lua\Manage\ControllerManage.lua" />
+    <Compile Include="Lua\Manage\GameManage.lua" />
+    <Compile Include="Lua\Other\eventlib.lua" />
+    <Compile Include="Lua\Other\events.lua" />
+    <Compile Include="Lua\Test.lua" />
+    <Compile Include="Lua\View\UpdateControllerView.lua" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+</Project>

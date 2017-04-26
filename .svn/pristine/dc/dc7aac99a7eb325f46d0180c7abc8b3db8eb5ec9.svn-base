@@ -1,0 +1,21 @@
+local GlobalEventController={};
+local this=GlobalEventController;
+
+function this.Init()
+print("GlobalEventController.Init()");
+GlobalVar.Event.AddListener(GlobalVar.Const.EVENT_STARTGAME,this.EVENT_STARTGAME);
+GlobalVar.Event.AddListener(GlobalVar.Const.EVENT_UPDATEGAME,this.EVENT_UPDATEGAME);
+end
+
+function this.EVENT_STARTGAME()
+GlobalVar.Event.RemoveListener(GlobalVar.Const.EVENT_STARTGAME);
+GlobalVar.GameManage.Start();
+end
+
+function this.EVENT_UPDATEGAME()
+GlobalVar.Event.RemoveListener(GlobalVar.Const.EVENT_UPDATEGAME);
+GlobalVar.ControllerManage.GetUpdateController().Start();
+end
+
+this.Init();
+return this;

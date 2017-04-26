@@ -1,0 +1,122 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
+using System.Text;
+
+public class BuildAB
+{
+    enum TargetPlatform
+    {
+        StandaloneWindows64,
+        Android,
+        iOS,
+    }
+#if UNITY_STANDALONE_WIN
+    static TargetPlatform targetPlatform = TargetPlatform.StandaloneWindows64;
+#elif UNITY_ANDROID
+    static TargetPlatform targetPlatform = TargetPlatform.Android;
+#elif UNITY_IPHONE
+    static TargetPlatform targetPlatform = TargetPlatform.iOS;
+#endif
+
+    [MenuItem("BuildAB/StandaloneWindows64")]
+    static void BuildABToStandaloneWindows64()
+    {
+        BuildPipeline.BuildAssetBundles(ResourceManage.GetStreamingAssetsPath() + "StandaloneWindows64", BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
+        CreateFiles();
+        AssetDatabase.Refresh();
+    }
+    [MenuItem("BuildAB/Android")]
+    static void BuildABToAndroid()
+    {
+        BuildPipeline.BuildAssetBundles(ResourceManage.GetStreamingAssetsPath() + "Android", BuildAssetBundleOptions.None, BuildTarget.Android);
+        CreateFiles();
+        AssetDatabase.Refresh();
+    }
+    [MenuItem("BuildAB/iOS")]
+    static void BuildABToiOS()
+    {
+        BuildPipeline.BuildAssetBundles(ResourceManage.GetStreamingAssetsPath() + "iOS", BuildAssetBundleOptions.None, BuildTarget.iOS);
+        CreateFiles();
+        AssetDatabase.Refresh();
+    }
+    [MenuItem("BuildAB/CreateFiles")]
+    static void CreateFiles()
+    {
+        string filePath = ResourceManage.GetStreamingAssetsPath() + "Files.txt";
+        if (File.Exists(filePath))
+            File.Delete(filePath);
+        List<string> tempList = new List<string>();
+        FilePathList(ResourceManage.GetStreamingAssetsPath());
+        for (int i = 0; i < filePathList.Count; i++)
+        {
+            string temp= filePathList[i].Replace(ResourceManage.GetStreamingAssetsPath(), "")+"|"+md5file(filePathList[i]);
+            string temp0=temp.Split('/')[0];
+            if (temp0 == TargetPlatform.StandaloneWindows64.ToString() || temp0 == TargetPlatform.Android.ToString() || temp0 == TargetPlatform.iOS.ToString())
+            {
+                if(temp0==targetPlatform.ToString())
+                    tempList.Add(temp);
+            }
+            else
+                tempList.Add(temp);
+        }
+        StreamWriter streamWriter = File.CreateText(filePath);
+        for (int i = 0; i < tempList.Count; i++)
+        {
+            streamWriter.WriteLine(tempList[i]);
+        }
+        streamWriter.Close();
+        Debug.Log("Files.txt  succeed " + targetPlatform);
+        AssetDatabase.Refresh();
+    }
+    static List<string> filePathList = new List<string>();
+    static void FilePathList(string path)
+    {
+        string[] names = Directory.GetFiles(path);
+        string[] dirs = Directory.GetDirectories(path);
+        foreach (string filename in names)
+        {
+            string ext = Path.GetExtension(filename);
+            if (!CanCopy(ext)) continue;
+            string temp = filename.Replace('\\', '/');
+            if (!filePathList.Contains(temp))
+                filePathList.Add(temp);
+        }
+        foreach (string dir in dirs)
+        {
+            FilePathList(dir);
+        }
+    }
+    static string md5file(string file)
+    {
+        try
+        {
+            FileStream fs = new FileStream(file, FileMode.Open);
+            System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            byte[] retVal = md5.ComputeHash(fs);
+            fs.Close();
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < retVal.Length; i++)
+            {
+                sb.Append(retVal[i].ToString("x2"));
+            }
+            return sb.ToString();
+        }
+        catch (System.Exception ex)
+        {
+            throw new System.Exception("md5file() fail, error:" + ex.Message);
+        }
+    }
+    static string[] exts = { "",".txt", ".db", ".lua", ".assetbundle" };
+    static bool CanCopy(string ext)
+    {   //能不能复制
+        foreach (string e in exts)
+        {
+            if (ext.Equals(e)) return true;
+        }
+        return false;
+    }
+}

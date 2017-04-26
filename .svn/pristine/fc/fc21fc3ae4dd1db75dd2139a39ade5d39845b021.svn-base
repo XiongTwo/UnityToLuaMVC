@@ -1,0 +1,24 @@
+local UpdateController={};
+local this=UpdateController;
+
+local View;
+
+function this.Init()
+print("UpdateController.Init()");
+end
+
+function this.Start(go)
+print("UpdateController.Start()"..go.name);
+end
+
+function this.Show()
+print("UpdateController.Show()");
+View=StaticModules.UpdateController.GetInstance():Show();
+--View:AddComponent(typeof(LuaBehaviour))
+--LuaBehaviour.AddLuaBehaviour(View,this.Start);
+end
+    
+this.Init();
+return this;
+
+

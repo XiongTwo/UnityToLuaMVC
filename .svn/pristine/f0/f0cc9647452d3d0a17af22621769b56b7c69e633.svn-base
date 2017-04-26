@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 242202271
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: loginbg_sprite.assetbundle
+      Dependencies: {}
+    Info_1:
+      Name: login_ui_root_prefab.assetbundle
+      Dependencies: {}
+    Info_2:
+      Name: login_ui_bg_prefab.assetbundle
+      Dependencies:
+        Dependency_0: loginbg_sprite.assetbundle
+    Info_3:
+      Name: test_prefab.assetbundle
+      Dependencies:
+        Dependency_0: loginbg_sprite.assetbundle

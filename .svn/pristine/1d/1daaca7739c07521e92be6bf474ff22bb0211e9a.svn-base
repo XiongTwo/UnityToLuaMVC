@@ -1,0 +1,17 @@
+﻿using UnityEngine;
+using System.Collections;
+using LuaInterface;
+
+public class Main : MonoBehaviour {
+
+	LuaState lua=null;
+
+	void Start () {
+        Debugger.Log("Main.cs");
+
+        lua = new LuaState ();
+		lua.Start ();
+		LuaBinder.Bind(lua);
+		lua.DoFile("Main.lua");
+	}
+}

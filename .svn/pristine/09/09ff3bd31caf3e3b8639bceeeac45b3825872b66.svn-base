@@ -1,0 +1,25 @@
+﻿using UnityEngine;
+using System.Collections;
+
+namespace StaticModules
+{
+    public class UpdateController
+    {
+        private static UpdateController instance;
+        
+        public UpdateController()
+        {
+
+        }
+        public static UpdateController GetInstance()
+        {
+            if (instance == null)
+                instance = new UpdateController();
+            return instance;
+        }
+        public void Start()
+        {
+            ResourceManage.GetInstance();
+        }
+    }
+}

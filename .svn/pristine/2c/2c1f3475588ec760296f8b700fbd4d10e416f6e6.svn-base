@@ -1,0 +1,51 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class ResourceManage
+{
+    private static ResourceManage instance;
+
+
+
+    public ResourceManage()
+    {
+
+    }
+    public static ResourceManage GetInstance()
+    {
+        if (instance == null)
+            instance = new ResourceManage();
+        return instance;
+    }
+    public static string GetStreamingAssetsPath()
+    {
+#if UNITY_EDITOR
+        string filepath = Application.streamingAssetsPath + "/";
+#elif UNITY_STANDALONE_WIN
+        string filepath = Application.streamingAssetsPath + "/";
+#elif UNITY_IPHONE
+        string filepath = Application.streamingAssetsPath + "/";
+#elif UNITY_ANDROID
+        string filepath = "jar:file://" + Application.streamingAssetsPath + "/";
+#endif
+        return filepath;
+    }
+    public static string GetPersistentDataPath()
+    {
+#if UNITY_EDITOR
+        string filepath = Application.persistentDataPath + "/";
+#elif UNITY_STANDALONE_WIN
+        string filepath = Application.persistentDataPath + "/";
+#elif UNITY_IPHONE
+        string filepath = Application.persistentDataPath + "/";
+#elif UNITY_ANDROID
+        string filepath = "jar:file://" + Application.persistentDataPath + "/";
+#endif
+        return filepath;
+    }
+    public Object Load(string path)
+    {
+
+        return null;
+    }
+}

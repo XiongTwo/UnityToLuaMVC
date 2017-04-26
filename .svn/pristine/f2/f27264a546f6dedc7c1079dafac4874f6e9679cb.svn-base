@@ -1,0 +1,8 @@
+local View={};
+local this=View;
+
+function this.Awake(go)
+print(go.name);
+end
+
+return this;

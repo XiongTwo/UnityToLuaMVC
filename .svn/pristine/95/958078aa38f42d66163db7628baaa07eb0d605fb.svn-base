@@ -1,0 +1,19 @@
+Main = {};
+Lua=nil;
+
+local this = Main;
+--主入口函数。从这里开始lua逻辑
+function Main.Init(obj)					
+	print("hello Main");
+	--print(Lua);
+	Lua=obj;
+	--obj.name="11";
+	--Lua.name="22";
+	--Lua:SetActive(false);
+	--Lua:AddComponent(typeof(UnityEngine.AudioSource));
+	Lua:DoFile("TestLua.lua");
+	TestLua.Init();
+	--local func=nil;
+	--func=Lua:GetFunction ("TestLua.Init");--LuaInterface_LuaCSFunction
+	--func:Call();
+end

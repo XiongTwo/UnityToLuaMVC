@@ -1,0 +1,33 @@
+ManifestFileVersion: 0
+CRC: 414396123
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 925bb5a7c786bcbac6e16f256ee9fc90
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: e7d9cfc2399c4b62f70fc1d0bab13e61
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 1980459831, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+- Class: 114
+  Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+- Class: 114
+  Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resource/Prefab/Login_UI_BG_Prefab.prefab
+Dependencies:
+- C:/Users/Administrator/Desktop/Card/CardGame/Assets/StreamingAssets/StandaloneWindows64/loginbg_sprite.assetbundle
