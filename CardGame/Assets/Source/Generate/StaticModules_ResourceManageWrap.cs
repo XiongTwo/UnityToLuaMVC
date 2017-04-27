@@ -9,7 +9,6 @@ public class StaticModules_ResourceManageWrap
 		L.BeginClass(typeof(StaticModules.ResourceManage), typeof(System.Object));
 		L.RegFunction("GetInstance", GetInstance);
 		L.RegFunction("Load", Load);
-		L.RegFunction("Destroy", Destroy);
 		L.RegFunction("New", _CreateStaticModules_ResourceManage);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -66,22 +65,6 @@ public class StaticModules_ResourceManageWrap
 			UnityEngine.Object o = obj.Load(arg0);
 			ToLua.Push(L, o);
 			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Destroy(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			StaticModules.ResourceManage obj = (StaticModules.ResourceManage)ToLua.CheckObject(L, 1, typeof(StaticModules.ResourceManage));
-			obj.Destroy();
-			return 0;
 		}
 		catch(Exception e)
 		{

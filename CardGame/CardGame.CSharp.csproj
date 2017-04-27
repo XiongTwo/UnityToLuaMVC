@@ -80,6 +80,7 @@
     <Compile Include="Assets\Script\SqliteDb\SqliteDbTest.cs" />
     <Compile Include="Assets\Script\StaticModules\Enum.cs" />
     <Compile Include="Assets\Script\StaticModules\ResourceManage.cs" />
+    <Compile Include="Assets\Script\StaticModules\SqliteDbManage.cs" />
     <Compile Include="Assets\Script\StaticModules\UpdateController.cs" />
     <Compile Include="Assets\Script\Tool\Common.cs" />
     <Compile Include="Assets\Script\Tool\LuaBehaviour.cs" />
@@ -88,10 +89,15 @@
     <Compile Include="Assets\Source\Generate\LuaBehaviourWrap.cs" />
     <Compile Include="Assets\Source\Generate\LuaBinder.cs" />
     <Compile Include="Assets\Source\Generate\LuaInterface_DebuggerWrap.cs" />
+    <Compile Include="Assets\Source\Generate\Mono_Data_Sqlite_SqliteDataReaderWrap.cs" />
+    <Compile Include="Assets\Source\Generate\SqliteDbHelperWrap.cs" />
     <Compile Include="Assets\Source\Generate\StaticModules_E_DevicePlatformWrap.cs" />
     <Compile Include="Assets\Source\Generate\StaticModules_E_MonoBehaviourLiftCycleWrap.cs" />
     <Compile Include="Assets\Source\Generate\StaticModules_ResourceManageWrap.cs" />
+    <Compile Include="Assets\Source\Generate\StaticModules_SqliteDbManageWrap.cs" />
     <Compile Include="Assets\Source\Generate\StaticModules_UpdateControllerWrap.cs" />
+    <Compile Include="Assets\Source\Generate\System_Data_Common_DbDataReaderWrap.cs" />
+    <Compile Include="Assets\Source\Generate\System_MarshalByRefObjectWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_AnimationBlendModeWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_AnimationClipWrap.cs" />
     <Compile Include="Assets\Source\Generate\UnityEngine_AnimationStateWrap.cs" />

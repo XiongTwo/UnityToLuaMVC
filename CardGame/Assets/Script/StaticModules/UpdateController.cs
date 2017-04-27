@@ -9,10 +9,12 @@ namespace StaticModules
         private static string resURL = "http://127.0.0.1:81/";
         private GameObject View = null;
 
+        public UpdateController()
+        {
+            instance = this;
+        }
         public static UpdateController GetInstance()
         {
-            if (instance == null)
-                instance = new UpdateController();
             return instance;
         }
         public GameObject Show()
@@ -24,7 +26,8 @@ namespace StaticModules
         }
         public void Hide()
         {
-            View.SetActive(false);
+            //View.SetActive(false);
+            Debug.LogError(1111111111);
         }
         public IEnumerator LoadServerFiles()
         {

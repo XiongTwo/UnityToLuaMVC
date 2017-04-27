@@ -5,16 +5,17 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Net;
 using System.IO;
+using System.Data;
+using Mono.Data.Sqlite;
 
 public class MonoBehaviourTest : MonoBehaviour {
 
     public Text text;
 	// Use this for initialization
 	void Awake () {
-        text.text = "";
+        text.text = "Error:\n";
         Application.logMessageReceived += SSS;
         Object.DontDestroyOnLoad(gameObject);
-        //ResourceManage.GetInstance();
     }
     void SSS(string s,string ss,LogType sss)
     {

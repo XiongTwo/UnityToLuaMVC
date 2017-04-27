@@ -15,11 +15,10 @@ namespace StaticModules
         public ResourceManage()
         {
             Prepare();
+            instance = this;
         }
         public static ResourceManage GetInstance()
         {
-            if (instance == null)
-                instance = new ResourceManage();
             return instance;
         }
         private static string persistentDataPath= Application.persistentDataPath + "/";
@@ -113,10 +112,6 @@ namespace StaticModules
             }
             Loadependent(name);
             return loadedAssetBundleDictionary[name].LoadAsset(name);
-        }
-        public void Destroy()
-        {
-            instance = null;
         }
     }
 }

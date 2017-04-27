@@ -6,6 +6,7 @@ GlobalVar.Event=nil;
 GlobalVar.Const=nil;
 GlobalVar.ControllerManage=nil;
 GlobalVar.ResourceManage=nil;
+GlobalVar.SqliteDbManage=nil;
 
 function this.Init()
     print("GlobalVar.Init()");	
@@ -13,7 +14,8 @@ function this.Init()
     this.Const = require("Const");
     this.Event = require("Other/events");
     this.ControllerManage = require("Manage/ControllerManage");
-    this.ResourceManage=StaticModules.ResourceManage.GetInstance();
+    this.ResourceManage=StaticModules.ResourceManage.New();
+    this.SqliteDbManage=StaticModules.SqliteDbManage.New();
     --GameManage要放在最后加载
     this.GameManage = require("Manage/GameManage");
 end
