@@ -27,6 +27,21 @@ public static class LuaBinder
 		L.EndModule();
 		L.EndModule();
 		L.EndModule();
+		L.BeginModule("System");
+		System_MarshalByRefObjectWrap.Register(L);
+		L.RegFunction("Action", System_Action);
+		L.RegFunction("Predicate_int", System_Predicate_int);
+		L.RegFunction("Action_int", System_Action_int);
+		L.RegFunction("Comparison_int", System_Comparison_int);
+		L.BeginModule("Collections");
+		System_Collections_ArrayListWrap.Register(L);
+		L.EndModule();
+		L.BeginModule("Data");
+		L.BeginModule("Common");
+		System_Data_Common_DbDataReaderWrap.Register(L);
+		L.EndModule();
+		L.EndModule();
+		L.EndModule();
 		L.BeginModule("UnityEngine");
 		UnityEngine_ComponentWrap.Register(L);
 		UnityEngine_TransformWrap.Register(L);
@@ -94,18 +109,6 @@ public static class LuaBinder
 		L.RegFunction("PCMSetPositionCallback", UnityEngine_AudioClip_PCMSetPositionCallback);
 		L.EndModule();
 		L.EndModule();
-		L.BeginModule("System");
-		System_MarshalByRefObjectWrap.Register(L);
-		L.RegFunction("Action", System_Action);
-		L.RegFunction("Predicate_int", System_Predicate_int);
-		L.RegFunction("Action_int", System_Action_int);
-		L.RegFunction("Comparison_int", System_Comparison_int);
-		L.BeginModule("Data");
-		L.BeginModule("Common");
-		System_Data_Common_DbDataReaderWrap.Register(L);
-		L.EndModule();
-		L.EndModule();
-		L.EndModule();
 		L.EndModule();
 		L.BeginPreLoad();
 		L.AddPreLoad("UnityEngine.MeshRenderer", LuaOpen_UnityEngine_MeshRenderer, typeof(UnityEngine.MeshRenderer));
@@ -125,6 +128,114 @@ public static class LuaBinder
 		L.AddPreLoad("UnityEngine.Rigidbody", LuaOpen_UnityEngine_Rigidbody, typeof(UnityEngine.Rigidbody));
 		L.EndPreLoad();
 		Debugger.Log("Register lua type cost time: {0}", Time.realtimeSinceStartup - t);
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Predicate_int(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Predicate<int>), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Predicate<int>), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action_int(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<int>), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<int>), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Comparison_int(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Comparison<int>), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Comparison<int>), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -360,114 +471,6 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(UnityEngine.AudioClip.PCMSetPositionCallback), func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action), func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action), func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Predicate_int(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Predicate<int>), func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Predicate<int>), func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_int(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<int>), func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<int>), func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Comparison_int(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Comparison<int>), func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Comparison<int>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

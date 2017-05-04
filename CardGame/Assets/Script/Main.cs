@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using LuaInterface;
+using UnityEngine.UI;
 
 public class Main : MonoBehaviour {
 
 	LuaState lua=null;
 
-	void Start () {
+    void Start () {
         Debugger.Log("Main.cs");
+        Text[] text = GameObject.FindObjectsOfType<Text>();
+        if (text.Length>1)
+        {
+            Destroy(text[1].transform.parent.parent.gameObject);
+        }
         var LastLuaLooper=GameObject.FindObjectOfType<LuaLooper>();
         if (LastLuaLooper != null)
         {

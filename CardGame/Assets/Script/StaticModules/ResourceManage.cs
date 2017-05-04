@@ -11,11 +11,14 @@ namespace StaticModules
         private Dictionary<string, AssetBundle> loadedAssetBundleDictionary = new Dictionary<string, AssetBundle>();
         private Dictionary<string, string> assetBundlePath = null;
         AssetBundleManifest assetBundleManifest = null;
+        public string[] filesArray = null;
 
         public ResourceManage()
         {
-            Prepare();
+            if (instance != null)
+                UnLoadedAssetBundleDictionary(instance.loadedAssetBundleDictionary);
             instance = this;
+            Prepare();
         }
         public static ResourceManage GetInstance()
         {
@@ -30,7 +33,7 @@ namespace StaticModules
             {
                 assetBundlePath = new Dictionary<string, string>();
                 string url = null;
-                string[] filesArray=null;
+                filesArray=null;
                 if (File.Exists(persistentDataPath + "files.txt"))
                 {
                     url = persistentDataPath + "files.txt";
@@ -112,6 +115,14 @@ namespace StaticModules
             }
             Loadependent(name);
             return loadedAssetBundleDictionary[name].LoadAsset(name);
+        }
+        private void UnLoadedAssetBundleDictionary(Dictionary<string, AssetBundle> _Dictionary)
+        {
+            Debug.LogError("ResourceManage.UnLoadedAssetBundleDictionary");
+            foreach (var item in _Dictionary)
+            {
+                item.Value.Unload(true);
+            }
         }
     }
 }

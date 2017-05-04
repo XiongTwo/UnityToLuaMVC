@@ -11,6 +11,7 @@ public class StaticModules_UpdateControllerWrap
 		L.RegFunction("Show", Show);
 		L.RegFunction("Hide", Hide);
 		L.RegFunction("LoadServerFiles", LoadServerFiles);
+		L.RegFunction("GetUpdateFileList", GetUpdateFileList);
 		L.RegFunction("New", _CreateStaticModules_UpdateController);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -98,6 +99,25 @@ public class StaticModules_UpdateControllerWrap
 			StaticModules.UpdateController obj = (StaticModules.UpdateController)ToLua.CheckObject(L, 1, typeof(StaticModules.UpdateController));
 			System.Collections.IEnumerator o = obj.LoadServerFiles();
 			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetUpdateFileList(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			StaticModules.UpdateController obj = (StaticModules.UpdateController)ToLua.CheckObject(L, 1, typeof(StaticModules.UpdateController));
+			System.Collections.ArrayList arg0 = (System.Collections.ArrayList)ToLua.CheckObject(L, 2, typeof(System.Collections.ArrayList));
+			System.Collections.ArrayList arg1 = (System.Collections.ArrayList)ToLua.CheckObject(L, 3, typeof(System.Collections.ArrayList));
+			System.Collections.ArrayList o = obj.GetUpdateFileList(arg0, arg1);
+			ToLua.PushObject(L, o);
 			return 1;
 		}
 		catch(Exception e)

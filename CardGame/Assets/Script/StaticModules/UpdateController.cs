@@ -42,5 +42,20 @@ namespace StaticModules
                 Debug.Log(www.text);
             }
         }
+        public ArrayList GetUpdateFileList(ArrayList server,ArrayList local)
+        {
+            ArrayList updateFileList = new ArrayList();
+            for (int i = 0; i < server.Count; i++)
+            {
+                if (!local.Contains(server[i]))
+                {
+                    string[] splitStr = { "|" };
+                    string[] tem= Common.Split(server[i].ToString(), splitStr);
+                    string updateFilePath = tem[0];
+                    updateFileList.Add(updateFilePath);
+                }
+            }
+            return updateFileList;
+        }
     }
 }

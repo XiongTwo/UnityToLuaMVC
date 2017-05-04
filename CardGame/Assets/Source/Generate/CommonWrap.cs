@@ -7,6 +7,9 @@ public class CommonWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(Common), typeof(System.Object));
+		L.RegFunction("Split", Split);
+		L.RegFunction("StrTrim", StrTrim);
+		L.RegFunction("ReplaceFile", ReplaceFile);
 		L.RegFunction("New", _CreateCommon);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("targetPlatform", get_targetPlatform, set_targetPlatform);
@@ -30,6 +33,58 @@ public class CommonWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: Common.New");
 			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Split(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			string[] arg1 = ToLua.CheckStringArray(L, 2);
+			string[] o = Common.Split(arg0, arg1);
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int StrTrim(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			string o = Common.StrTrim(arg0);
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ReplaceFile(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
+			Common.ReplaceFile(arg0, arg1);
+			return 0;
 		}
 		catch(Exception e)
 		{

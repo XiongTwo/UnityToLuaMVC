@@ -11,6 +11,7 @@ public class StaticModules_ResourceManageWrap
 		L.RegFunction("Load", Load);
 		L.RegFunction("New", _CreateStaticModules_ResourceManage);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("filesArray", get_filesArray, set_filesArray);
 		L.EndClass();
 	}
 
@@ -69,6 +70,44 @@ public class StaticModules_ResourceManageWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_filesArray(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			StaticModules.ResourceManage obj = (StaticModules.ResourceManage)o;
+			string[] ret = obj.filesArray;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index filesArray on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_filesArray(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			StaticModules.ResourceManage obj = (StaticModules.ResourceManage)o;
+			string[] arg0 = ToLua.CheckStringArray(L, 2);
+			obj.filesArray = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index filesArray on a nil value" : e.Message);
 		}
 	}
 }

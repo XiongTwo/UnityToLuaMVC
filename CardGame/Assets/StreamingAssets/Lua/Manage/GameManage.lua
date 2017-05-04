@@ -50,7 +50,7 @@ function this.Quit()
 end
 
 function this.Reset()					
-	print("GameManage.Reset()");
+	Debugger.LogError("GameManage.Reset()");
     UnityEngine.SceneManagement.SceneManager.LoadScene(GlobalVar.Const.SCENE_MAIN);
 end
 
