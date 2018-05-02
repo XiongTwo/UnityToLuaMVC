@@ -30,10 +30,11 @@ namespace StaticModules
                 _db = new SqliteDbHelper("Data Source=" + path);
                 return _db;
             }
+            string url = null;
 #if UNITY_EDITOR
-            string url = "file://" + Application.streamingAssetsPath + "/DB/" + _dbName;
+            url = "file://" + Application.streamingAssetsPath + "/DB/" + _dbName;
 #elif UNITY_ANDROID
-            string url = Application.streamingAssetsPath + "/DB/"+ _dbName;
+            url = Application.streamingAssetsPath + "/DB/"+ _dbName;
 #endif
             WWW www = new WWW(url);
             while (!www.isDone)

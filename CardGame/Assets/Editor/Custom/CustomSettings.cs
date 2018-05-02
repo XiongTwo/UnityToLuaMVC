@@ -56,7 +56,6 @@ public static class CustomSettings
         _GT(typeof(LuaBehaviour)),
         _GT(typeof(Common)),
         _GT(typeof(StaticModules.E_MonoBehaviourLiftCycle)),
-        _GT(typeof(StaticModules.E_DevicePlatform)),
         _GT(typeof(System.Collections.ArrayList)),
         //-------------------------------------------------------------------        
                 

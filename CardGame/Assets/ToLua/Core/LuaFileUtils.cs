@@ -185,11 +185,11 @@ namespace LuaInterface
             }
 
             #region  Unity www 模式
-            
+            string url = null;
 #if UNITY_EDITOR
-            string url = "file://"+Application.streamingAssetsPath+ "/Lua/" + fileName;
+            url = "file://"+Application.streamingAssetsPath+ "/Lua/" + fileName;
 #elif UNITY_ANDROID
-            string url = Application.streamingAssetsPath+ "/Lua/" + fileName;
+            url = Application.streamingAssetsPath+ "/Lua/" + fileName;
 #endif
             WWW www = new WWW(url);
             while (!www.isDone)

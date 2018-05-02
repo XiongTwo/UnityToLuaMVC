@@ -16,22 +16,22 @@ public class MonoBehaviourTest : MonoBehaviour {
     string sss;
     
 	void Awake () {
-        text.text = "Error:\n";
+        text.text = "ErrorLog:Null\n";
         Object.DontDestroyOnLoad(gameObject);
     }
     void OnEnable()
     {
-        Application.logMessageReceived += SSS;
+        Application.logMessageReceived += Log;
     }
     void OnDisable()
     {
-        Application.logMessageReceived -= SSS;
+        Application.logMessageReceived -= Log;
     }
     void OnDestroy()
     {
-        Application.logMessageReceived -= SSS;
+        Application.logMessageReceived -= Log;
     }
-    void SSS(string s,string ss,LogType sss)
+    void Log(string s,string ss,LogType sss)
     {
         if (sss != LogType.Error)
             return;

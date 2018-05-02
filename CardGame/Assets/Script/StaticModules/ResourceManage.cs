@@ -105,8 +105,9 @@ namespace StaticModules
         {
             if (assetBundleManifest == null)
             {
-                Loadependent(Common.targetPlatform.ToString());
-                assetBundleManifest = loadedAssetBundleDictionary[Common.targetPlatform.ToString()].LoadAsset("AssetBundleManifest") as AssetBundleManifest;
+                string buildTarget = Common.GetBuildTarget();
+                Loadependent(buildTarget);
+                assetBundleManifest = loadedAssetBundleDictionary[buildTarget].LoadAsset("AssetBundleManifest") as AssetBundleManifest;
             }
             string[] dep = assetBundleManifest.GetDirectDependencies(name + ".assetbundle");
             for (int i = 0; i < dep.Length; i++)

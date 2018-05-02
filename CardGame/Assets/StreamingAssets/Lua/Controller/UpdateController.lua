@@ -22,8 +22,8 @@ function this.Show()
         LuaBehaviour.AddLuaBehaviour(View);
     end
     View:SetActive(true);
-    this.LoadLocalFiles();
-    this.StartLoadServerFiles();
+    --this.LoadLocalFiles();
+    --this.StartLoadServerFiles();
 end
 function this.Hide()
     View:SetActive(false);

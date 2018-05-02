@@ -6,16 +6,6 @@ using System.IO;
 
 public class Common  {
 
-//#if UNITY_EDITOR
-//    public static E_DevicePlatform targetPlatform = E_DevicePlatform.StandaloneWindows64;
-#if UNITY_STANDALONE_WIN
-    public static E_DevicePlatform targetPlatform = E_DevicePlatform.StandaloneWindows64;
-#elif UNITY_ANDROID
-    public static E_DevicePlatform targetPlatform = E_DevicePlatform.Android;
-#elif UNITY_IPHONE
-    public static E_DevicePlatform targetPlatform = E_DevicePlatform.iOS;
-#endif
-    
     public static string[] Split(string str,string[] s)
     {
         return str.Split(s, System.StringSplitOptions.RemoveEmptyEntries);
@@ -38,5 +28,16 @@ public class Common  {
                 Directory.CreateDirectory(dir);
         }
         File.WriteAllBytes(path,bytes);
+    }
+    public static string GetBuildTarget()
+    {
+#if UNITY_STANDALONE_WIN
+        return "StandaloneWindows64";
+#elif UNITY_ANDROID
+        return "Android";
+#elif UNITY_IOS
+        return "iOS";
+#endif
+        return null;
     }
 }

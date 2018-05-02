@@ -4,59 +4,27 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using System.Text;
-using StaticModules;
 
 public class BuildAB
 {
-    private static string path=Application.streamingAssetsPath + "/";
+    private static string path = Application.streamingAssetsPath + "/";
 
-    [MenuItem("BuildAB/StandaloneWindows64")]
-    static void BuildABToStandaloneWindows64()
-    {
-        if (!Directory.Exists(path + "StandaloneWindows64"))
-        {
-            Directory.CreateDirectory(path + "StandaloneWindows64");
-        }
-        BuildPipeline.BuildAssetBundles(path + "StandaloneWindows64", BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
-        CreateFiles();
-        AssetDatabase.Refresh();
-    }
-    [MenuItem("BuildAB/Android")]
-    static void BuildABToAndroid()
-    {
-        if (!Directory.Exists(path + "Android"))
-        {
-            Directory.CreateDirectory(path + "Android");
-        }
-        BuildPipeline.BuildAssetBundles(path + "Android", BuildAssetBundleOptions.None, BuildTarget.Android);
-        CreateFiles();
-        AssetDatabase.Refresh();
-    }
-    [MenuItem("BuildAB/iOS")]
-    static void BuildABToiOS()
-    {
-        if (!Directory.Exists(path + "iOS"))
-        {
-            Directory.CreateDirectory(path + "iOS");
-        }
-        BuildPipeline.BuildAssetBundles(path + "iOS", BuildAssetBundleOptions.None, BuildTarget.iOS);
-        CreateFiles();
-        AssetDatabase.Refresh();
-    }
-    [MenuItem("BuildAB/TargetPlatform",false,0)]
+    [MenuItem("BuildAB/TargetPlatform", false, 0)]
     static void BuildTargetPlatform()
     {
-        if (!Directory.Exists(path + Common.targetPlatform.ToString()))
+        BuildTarget buildTarget = GetBuildTarget();
+        if (!Directory.Exists(path + buildTarget.ToString()))
         {
-            Directory.CreateDirectory(path + Common.targetPlatform.ToString());
+            Directory.CreateDirectory(path + buildTarget.ToString());
         }
-        BuildPipeline.BuildAssetBundles(path + Common.targetPlatform.ToString(), BuildAssetBundleOptions.None, (BuildTarget)System.Enum.Parse(typeof(BuildTarget), Common.targetPlatform.ToString()));
+        BuildPipeline.BuildAssetBundles(path + buildTarget.ToString(), BuildAssetBundleOptions.None, buildTarget);
         CreateFiles();
         AssetDatabase.Refresh();
     }
-    [MenuItem("BuildAB/CreateFiles",false,11)]
+    [MenuItem("BuildAB/CreateFiles", false, 11)]
     static void CreateFiles()
     {
+        BuildTarget buildTarget = GetBuildTarget();
         string filePath = path + "Files.txt";
         if (File.Exists(filePath))
             File.Delete(filePath);
@@ -64,11 +32,11 @@ public class BuildAB
         FilePathList(path);
         for (int i = 0; i < filePathList.Count; i++)
         {
-            string temp= filePathList[i].Replace(path, "")+"|"+md5file(filePathList[i]);
-            string temp0=temp.Split('/')[0];
-            if (temp0 == E_DevicePlatform.StandaloneWindows64.ToString() || temp0 == E_DevicePlatform.Android.ToString() || temp0 == E_DevicePlatform.iOS.ToString())
+            string temp = filePathList[i].Replace(path, "") + "|" + md5file(filePathList[i]);
+            string temp0 = temp.Split('/')[0];
+            if (temp0 == BuildTarget.StandaloneWindows64.ToString() || temp0 == BuildTarget.Android.ToString() || temp0 == BuildTarget.iOS.ToString())
             {
-                if(temp0== Common.targetPlatform.ToString())
+                if (temp0 == buildTarget.ToString())
                     tempList.Add(temp);
             }
             else
@@ -80,26 +48,26 @@ public class BuildAB
             streamWriter.WriteLine(tempList[i]);
         }
         streamWriter.Close();
-        Debug.Log("Files.txt  succeed " + Common.targetPlatform);
+        Debug.Log("Files.txt  succeed " + buildTarget);
         AssetDatabase.Refresh();
     }
     [MenuItem("BuildAB/Clear", false, 31)]
     static void Clear()
     {
-        if (Directory.Exists(path + E_DevicePlatform.Android.ToString()))
+        if (Directory.Exists(path + BuildTarget.Android.ToString()))
         {
-            Directory.Delete(path + E_DevicePlatform.Android.ToString(), true);
-            Debug.LogError("Directory.Delete:"+ E_DevicePlatform.Android.ToString());
+            Directory.Delete(path + BuildTarget.Android.ToString(), true);
+            Debug.LogError("Directory.Delete:" + BuildTarget.Android.ToString());
         }
-        if (Directory.Exists(path + E_DevicePlatform.iOS.ToString()))
+        if (Directory.Exists(path + BuildTarget.iOS.ToString()))
         {
-            Directory.Delete(path + E_DevicePlatform.iOS.ToString(), true);
-            Debug.LogError("Directory.Delete:" + E_DevicePlatform.iOS.ToString());
+            Directory.Delete(path + BuildTarget.iOS.ToString(), true);
+            Debug.LogError("Directory.Delete:" + BuildTarget.iOS.ToString());
         }
-        if (Directory.Exists(path + E_DevicePlatform.StandaloneWindows64.ToString()))
+        if (Directory.Exists(path + BuildTarget.StandaloneWindows64.ToString()))
         {
-            Directory.Delete(path + E_DevicePlatform.StandaloneWindows64.ToString(), true);
-            Debug.LogError("Directory.Delete:" + E_DevicePlatform.StandaloneWindows64.ToString());
+            Directory.Delete(path + BuildTarget.StandaloneWindows64.ToString(), true);
+            Debug.LogError("Directory.Delete:" + BuildTarget.StandaloneWindows64.ToString());
         }
         if (File.Exists(path + "Files.txt"))
         {
@@ -147,7 +115,7 @@ public class BuildAB
             throw new System.Exception("md5file() fail, error:" + ex.Message);
         }
     }
-    static string[] exts = { "",".txt", ".db", ".lua", ".assetbundle" };
+    static string[] exts = { "", ".txt", ".db", ".lua", ".assetbundle" };
     static bool CanCopy(string ext)
     {   //能不能复制
         foreach (string e in exts)
@@ -155,5 +123,17 @@ public class BuildAB
             if (ext.Equals(e)) return true;
         }
         return false;
+    }
+    static BuildTarget GetBuildTarget()
+    {
+        BuildTarget buildTarget = BuildTarget.NoTarget;
+#if UNITY_STANDALONE_WIN
+        buildTarget = BuildTarget.StandaloneWindows64;
+#elif UNITY_ANDROID
+        buildTarget = BuildTarget.Android;
+#elif UNITY_IOS
+        buildTarget = BuildTarget.iOS;
+#endif
+        return buildTarget;
     }
 }
